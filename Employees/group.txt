@@ -1,0 +1,2 @@
+class Permanent_payment:	Иван,     Иванов,      35,Туниядец,           30000;
+class Hourly_pay:	Петя,     Петров,      40,Продавец,            1200;
