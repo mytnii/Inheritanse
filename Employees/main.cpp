@@ -10,6 +10,8 @@
 #define delimiter std::cout << "\n----------------------------------------------\n\n";
 class Human;
 std::ifstream& operator<<(std::ifstream& out, Human& obj);
+std::ifstream& operator>>(std::ifstream& out, Human& obj);
+
 
 
 class Human
@@ -75,15 +77,12 @@ public:
 
 	virtual std::ofstream& set_group_txt(std::ofstream& in)const
 	{
-		in.width(10);
 		in << std::left;
 		in << last_name + ",";
 
-		in.width(10);
 		in << std::left;
 		in << first_name + ",";
 
-		in.width(5);
 		in << std::right;
 		in << age;
 		in << ",";
@@ -139,7 +138,6 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Human::set_group_txt(in);
-		in.width(15);
 		in << std::left;
 		in << position + ",";
 
@@ -206,7 +204,6 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Employee::set_group_txt(in);
-		in.width(10);
 		in << std::right;
 		in << salary;
 		in << ";";
@@ -277,7 +274,6 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Employee::set_group_txt(in);
-		in.width(10);
 		in << std::right;
 		in << payment;
 		in << ";";
@@ -323,7 +319,7 @@ std::ifstream& operator>>(std::ifstream& out,  Human& obj)
 	return obj.get_group_txt(out);
 }
 
-void print(const Human** group, const int size)
+void print(  const Human** group,  int size)
 {
 	delimiter;
 
@@ -336,6 +332,20 @@ void print(const Human** group, const int size)
 
 }
 
+void print( Human** group, int size)
+{
+	delimiter;
+
+	for (int i = 0; i < size; i++)
+	{
+		std::cout << *group[i] << std::endl;
+	}
+
+	delimiter;
+
+}
+
+
 void save_to_file(const Human* group[], const int size, const std::string file_name)
 {
 	std::ofstream fout(file_name);
@@ -347,56 +357,95 @@ void save_to_file(const Human* group[], const int size, const std::string file_n
 		fout << *group[i] << std::endl;
 	}
 	fout.close();
+
+	system("notepad employes.txt");
+
 }
 
-//Human** load_from_file(const std::string file_name)
-//{
-//	std::ifstream fin(file_name);
-//		int count = 0;
-//		Human** employes_txt = nullptr;
-//
-//	if (fin.is_open())
-//	{
-//		std::string buffer;
-//
-//		while (!fin.eof())
-//		{
-//			getline(fin, buffer, ';');
-//			count++;
-//		}
-//
-//		std::cout << count << std::endl;
-//
-//		employes_txt = new Human * [--count]{};
-//		fin.clear();
-//		fin.seekg(0);
-//		for (int i = 0; i < count; i++)
-//		{
-//			getline(fin, buffer, '\t');
-//
-//			if (buffer == "class Permanent_paymen")
-//			{
-//				employes_txt[i] = new Permanent_payment("", "", 0, "", 0);
-//				fin >> *employes_txt[i];
-//			}
-//			else if (buffer == "class Hourly_pay")
-//			{
-//				employes_txt[i] = new Hourly_pay("", "", 0, "", 0);
-//				fin >> *employes_txt[i];
-//			}
-//		}
-//		fin.close();
-//	}
-//	else
-//	{
-//		std::cerr << "Ошибка: Файл не существует" << std::endl;
-//	}
-//
-//	return 0;
-//
-//}
+Human** load_from_file(const std::string file_name)
+{
+	std::ifstream fin;
+	fin.open("employes.txt");
+	std::string line;
+	int str = 0;
+
+	Human** employes_txt = nullptr;
+
+	if (fin.is_open())
+	{
+		std::cout << "Файл открыт" << std::endl;
+
+		while (!fin.eof())
+		{
+			getline(fin, line, ';');
+			std::cout << line << std::endl;
+			str++;
+		}
+
+		--str;
+		std::cout << fin.tellg() << std::endl;
+		fin.clear();
+		fin.seekg(0);
+		std::cout << fin.tellg() << std::endl;
+
+		employes_txt = new Human * [str] {};
+
+		std::cout << str << std::endl;
+
+		for (int i = 0; i < str; i++)
+		{
+			std::cout << employes_txt[i] << std::endl;
+		}
+		for (int i = 0; i < str; i++)
+		{
+			getline(fin, line, ':');
+
+			if (line.find("class Permanent_paymen") != std::string::npos)
+			{
+				employes_txt[i] = new Permanent_payment("last_name", "first_name", 0, "position", 0);
+			}
+			else if (line.find("class Hourly_pay") != std::string::npos)
+			{
+				employes_txt[i] = new Hourly_pay("last_name", "first_name", 0, "position", 0);
+			}
+
+			fin >> *employes_txt[i];
+
+			std::cout << *employes_txt[i] << std::endl;
+		}
+
+		return employes_txt;
+	}
+	else
+	{
+		std::cout << "Файла не существует" << std::endl;
+	}
+
+	fin.close();
+
+	return 0;
+
+}
+
+void del(const Human** employes, const int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		delete employes[i];
+	}
+}
+
+void del( Human** employes, const int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		delete employes[i];
+	}
+}
 
 
+//#define DEBAG
+//#define LOAD_FROM_FFILE
 
 void main()
 {
@@ -412,20 +461,14 @@ void main()
 
 	save_to_file(employes, sizeof(employes) / sizeof(Human*), "employes.txt");
 
-	system("notepad employes.txt");
+	del(employes, sizeof(employes) / sizeof(Human*));
 
+	 Human** employes_txt = load_from_file("employes.txt");
 
-
-	for (int i = 0; i < sizeof(employes) / sizeof(Human*); i++)
-	{
-		delete employes[i];
-	}
-
-	//Human** employees = load_from_file("group.txt");
-
+#ifdef DEBUG
 	std::ifstream fin("employes.txt");
 	int count = 0;
-		const Human**employes_txt = nullptr;
+	const Human** employes_txt = nullptr;
 
 	if (fin.is_open())
 	{
@@ -446,16 +489,16 @@ void main()
 		{
 			getline(fin, line, ':');
 
-			if (line == "class Permanent_paymen")
+			if (line.find("class Permanent_paymen") != std::string::npos)
 			{
 				employes_txt[i] = new Permanent_payment("", "", 0, "", 0);
 			}
-			else if (line == "class Hourly_pay")
+			else if (line.find("class Hourly_pay") != std::string::npos)
 			{
 				employes_txt[i] = new Hourly_pay("", "", 0, "", 0);
 			}
-			std::string buffer;
-			getline(fin, buffer, ';');
+			/*std::string buffer;
+			getline(fin, buffer, ',');*/
 		}
 		fin.close();
 	}
@@ -464,12 +507,84 @@ void main()
 		std::cerr << "Ошибка: Файл не существует" << std::endl;
 	}
 
-	print(employes_txt, count);
+	/*print(employes_txt, count);*/
 
-	for (int i = 0; i < count; i++)
+	/*for (int i = 0; i < count; i++)
 	{
 		delete employes_txt[i];
 	}
 
+	delete[] employes_txt;*/
+
+#endif // DEBUG
+
+#ifdef LOAD_FROM_FFILE
+
+	std::ifstream fin;
+	fin.open("employes.txt");
+	std::string line;
+	int str = 0;
+
+	Human** employes_txt = nullptr;
+
+	if (fin.is_open())
+	{
+		std::cout << "Файл открыт" << std::endl;
+
+		while (!fin.eof())
+		{
+			getline(fin, line, ';');
+			std::cout << line << std::endl;
+			str++;
+		}
+
+		--str;
+		std::cout << fin.tellg() << std::endl;
+		fin.clear();
+		fin.seekg(0);
+		std::cout << fin.tellg() << std::endl;
+
+		employes_txt = new Human * [str] {};
+
+		std::cout << str << std::endl;
+
+		for (int i = 0; i < str; i++)
+		{
+			std::cout << employes_txt[i] << std::endl;
+		}
+		for (int i = 0; i < str; i++)
+		{
+			getline(fin, line, ':');
+
+			if (line.find("class Permanent_paymen") != std::string::npos)
+			{
+				employes_txt[i] = new Permanent_payment("last_name", "first_name", 0, "position", 0);
+			}
+			else if (line.find("class Hourly_pay") != std::string::npos)
+			{
+				employes_txt[i] = new Hourly_pay("last_name", "first_name", 0, "position", 0);
+			}
+
+			fin >> *employes_txt[i];
+
+			std::cout << *employes_txt[i] << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "Файла не существует" << std::endl;
+	}
+
+	fin.close();
+
+#endif // LOAD_FROM_FILE
+
+
+	print(employes_txt, sizeof(employes) / sizeof(Human*));
+	
+
+	del(employes_txt, sizeof(employes) / sizeof(Human*));
+
+	delete[] employes_txt;
 
 }
