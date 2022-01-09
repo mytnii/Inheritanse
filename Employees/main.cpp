@@ -8,11 +8,6 @@
 #include<fstream>
 
 #define delimiter std::cout << "\n----------------------------------------------\n\n";
-class Human;
-std::ifstream& operator<<(std::ifstream& out, Human& obj);
-std::ifstream& operator>>(std::ifstream& out, Human& obj);
-
-
 
 class Human
 {
