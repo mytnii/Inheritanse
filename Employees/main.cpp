@@ -378,10 +378,10 @@ Human** load_from_file(const std::string file_name)
 		}
 
 		--str;
-		std::cout << fin.tellg() << std::endl;
+		/*std::cout << fin.tellg() << std::endl;*/
 		fin.clear();
 		fin.seekg(0);
-		std::cout << fin.tellg() << std::endl;
+		/*std::cout << fin.tellg() << std::endl;*/
 
 		employes_txt = new Human * [str] {};
 
@@ -406,7 +406,7 @@ Human** load_from_file(const std::string file_name)
 
 			fin >> *employes_txt[i];
 
-			std::cout << *employes_txt[i] << std::endl;
+			/*std::cout << *employes_txt[i] << std::endl;*/
 		}
 
 		return employes_txt;
@@ -574,12 +574,8 @@ void main()
 
 #endif // LOAD_FROM_FILE
 
-
 	print(employes_txt, sizeof(employes) / sizeof(Human*));
 	
-
 	del(employes_txt, sizeof(employes) / sizeof(Human*));
-
-	delete[] employes_txt;
 
 }
