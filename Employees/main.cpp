@@ -72,25 +72,30 @@ public:
 
 	virtual std::ofstream& set_group_txt(std::ofstream& in)const
 	{
+		in.width(10);
 		in << std::left;
-		in << last_name + ",";
+		in << last_name;
+		in << "|";
 
+		in.width(10);
 		in << std::left;
-		in << first_name + ",";
+		in << first_name;
+		in << "|";
 
+		in.width(5);
 		in << std::right;
 		in << age;
-		in << ",";
+		in << "|  ";
 
 		return in;
 	}
 
 	virtual std::ifstream& get_group_txt(std::ifstream& out)
 	{
-		getline(out, last_name, ',');
-		getline(out, first_name, ',');
+		getline(out, last_name, '|');
+		getline(out, first_name, '|');
 		std::string buffer;
-		getline(out, buffer, ',');
+		getline(out, buffer, '|');
 		set_age(stoi(buffer));
 
 		return out;
@@ -133,8 +138,10 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Human::set_group_txt(in);
+		in.width(10);
 		in << std::left;
-		in << position + ",";
+		in << position;
+		in <<"|";
 
 		return in;
 	}
@@ -142,7 +149,17 @@ public:
 	std::ifstream& get_group_txt(std::ifstream& out)
 	{
 		Human::get_group_txt(out);
-		getline(out, position, ',');
+		getline(out, position, '|');
+
+		std::cout << position << std::endl;
+
+		std::size_t found = position.find_first_not_of(" ");
+
+		position.erase(1, found - 1);
+
+		std::cout << position << std::endl;
+
+		
 
 		return out;
 	}
@@ -199,9 +216,10 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Employee::set_group_txt(in);
+		in.width(5);
 		in << std::right;
 		in << salary;
-		in << ";";
+		in << "|;";
 
 		return in;
 	}
@@ -269,9 +287,10 @@ public:
 	std::ofstream& set_group_txt(std::ofstream& in)const
 	{
 		Employee::set_group_txt(in);
+		in.width(5);
 		in << std::right;
 		in << payment;
-		in << ";";
+		in << "|;";
 
 		return in;
 	}
@@ -348,7 +367,9 @@ void save_to_file(const Human* group[], const int size, const std::string file_n
 
 	for (int i = 0; i < size; i++)
 	{
-		fout << typeid(*group[i]).name() << ":";
+		fout.width(25);
+		fout << std::left;
+		fout << typeid(*group[i]).name() << "|";
 		fout << *group[i] << std::endl;
 	}
 	fout.close();
@@ -393,7 +414,7 @@ Human** load_from_file(const std::string file_name)
 		}
 		for (int i = 0; i < str; i++)
 		{
-			getline(fin, line, ':');
+			getline(fin, line, '|');
 
 			if (line.find("class Permanent_paymen") != std::string::npos)
 			{
