@@ -21,9 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{4f55d20d-7cae-4a44-a20b-3dba3e40f8cd}</ProjectGuid>
-    <RootNamespace>Employees</RootNamespace>
+    <ProjectGuid>{50f62c9e-40ec-4bca-ac99-cad53ffd271a}</ProjectGuid>
+    <RootNamespace>geometrishapes</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GeometriShapes</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
