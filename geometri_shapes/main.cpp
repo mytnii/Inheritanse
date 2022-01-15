@@ -6,8 +6,6 @@
 
 #include <Windows.h>
 #include <iostream>
-//#include <conio.h>
-//#include <cmath>
 
 #define delimiter std::cout <<"----------------------------------------------------\n"
 
@@ -22,7 +20,6 @@ enum Color
 	green = 0x0000FF00,
 	blue  = 0x00FF0000
 };
-
 
 namespace GeometriShapes
 {
@@ -57,6 +54,13 @@ namespace GeometriShapes
 			std::cout << "QuConstructor" << this << std::endl;
 		}
 
+		//---------------------------Destructor-------------------------------
+
+		~Quadrangle()
+		{
+			std::cout << "QuDestructor:\t" << this << std::endl;
+		}
+
 	};
 
 	class Square :public Quadrangle
@@ -81,7 +85,7 @@ namespace GeometriShapes
 
 		Square(Color color, double side):Quadrangle(color)
 		{
-			this->side = side;
+			set_side(side);
 
 			std::cout << "SqConstructor:\t" << this << std::endl;
 		}
@@ -95,15 +99,15 @@ namespace GeometriShapes
 
 		//------------------------------Methods-------------------------------------------------
 
-		double area(double side)
+		double area(double side)const
 		{
 			return pow(side, 2);
 		}
-		double perimeter(double side)
+		double perimeter(double side)const
 		{
 			return side * 4;
 		}
-		void drawing()
+		void drawing()const
 		{
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hConsole, color);
@@ -118,7 +122,7 @@ namespace GeometriShapes
 			}
 			SetConsoleTextAttribute(hConsole, consol_white);
 		}
-		void print()
+		void print()const
 		{
 			std::cout << "Стороны квадрата: " << side << std::endl;
 			std::cout << "Площадь кварата: " << area(side) << std::endl;
@@ -479,19 +483,18 @@ namespace GeometriShapes
 		{
 			HWND hwnd = GetConsoleWindow();
 
-			HDC dc = GetDC(hwnd);
+			HDC hdc = GetDC(hwnd);
 
 			HBRUSH hBrush = CreateSolidBrush(color);
 
-			SelectObject(dc, hBrush);
+			SelectObject(hdc, hBrush);
 			/*SetDCBrushColor(hdc, RGB(255, 0, 0));*/
 
-			Ellipse(dc, 1300, 300, 1300 + diameter(), 300 + diameter());
+			Ellipse(hdc, 1300, 300, 1300 + diameter(), 300 + diameter());
 
 			DeleteObject(hBrush);
-			ReleaseDC(hwnd, dc);
+			ReleaseDC(hwnd, hdc);
 		}
-
 		void print()const
 		{
 			std::cout << "Радиус круга: " << radius << std::endl;
@@ -519,17 +522,10 @@ int main()
 	square.print();
 	delimiter;
 
-	/*system("pause");
-	system("cls");*/
-
 	GeometriShapes::Rectangle rectangle(consol_blue, 5, 10);
 	delimiter;
 	rectangle.print();
 	delimiter;
-
-	//system("pause");
-	//system("cls");
-
 
 	GeometriShapes::EquilateralTriangle equilateral_triangle(consol_red, 8);
 	delimiter;
@@ -540,7 +536,6 @@ int main()
 	delimiter;
 	isosceles_triangle.print();
 	delimiter;
-
 
 	GeometriShapes::Circle circle(blue, 200);
 	delimiter;
