@@ -2,21 +2,30 @@
    Для каждой фигуры вывести ее особые свойства (первичные параметры), площадь, периметр 
    и наривать каждую фигуру.*/
 
+#define _USE_MATH_DEFINES
+
 #include <Windows.h>
 #include <iostream>
+//#include <conio.h>
+//#include <cmath>
 
 #define delimiter std::cout <<"----------------------------------------------------\n"
+
 enum Color
 {
-	green = 0xAA,
-	blue = 0xBB,
-	yellow = 0xEE,
-	white = 0x07
+	consol_green  = 0xAA,
+	consol_blue  = 0xBB,
+	consol_red   = 0xCC,
+	consol_white = 0x07,
+ 
+	red   = 0x000000FF, 
+	green = 0x0000FF00,
+	blue  = 0x00FF0000
 };
+
 
 namespace GeometriShapes
 {
-
 	class Shape
 	{
 	protected:
@@ -25,7 +34,7 @@ namespace GeometriShapes
 
 		//------------------------Constructors----------------------------------
 
-		Shape(Color color) :color(color)
+		Shape(enum::Color color) :color(color)
 		{
 			std::cout << "ShConstructor:\t" << this << std::endl;
 		}
@@ -107,7 +116,7 @@ namespace GeometriShapes
 
 				std::cout << std::endl;
 			}
-			SetConsoleTextAttribute(hConsole, Color::white);
+			SetConsoleTextAttribute(hConsole, consol_white);
 		}
 		void print()
 		{
@@ -170,15 +179,15 @@ namespace GeometriShapes
 
 		//------------------------------Methods-------------------------------------------------
 
-		double area(double length, double width)
+		double area(double length, double width)const
 		{
 			return length * width;
 		}
-		double perimeter(double length, double width)
+		double perimeter(double length, double width)const
 		{
 			return (length + width) * 2;
 		}
-		void drawing()
+		void drawing()const
 		{
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hConsole, color);
@@ -192,10 +201,10 @@ namespace GeometriShapes
 
 				std::cout << std::endl;
 			}
-			SetConsoleTextAttribute(hConsole, white);
+			SetConsoleTextAttribute(hConsole, consol_white);
 
 		}
-		void print()
+		void print()const
 		{
 			std::cout << "Длинна прямоугольника: " << length << std::endl;
 			std::cout << "Ширина прямоугольник: " << width << std::endl;
@@ -225,7 +234,6 @@ namespace GeometriShapes
 		{
 			std::cout << "TrDestructor:\t" << this << std::endl;
 		}
-
 	};
 
 	class EquilateralTriangle :public Triangle
@@ -265,7 +273,7 @@ namespace GeometriShapes
 		}
 		double area()const
 		{
-			return 0, 5 * side * height();
+			return 0.5 * side * height();
 		}
 		double perimeter()const
 		{
@@ -273,14 +281,231 @@ namespace GeometriShapes
 		}
 		void draving()const
 		{
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hConsole, color);
+			int count = side - 1;
 
 			for (int i = 0; i < side; i++)
 			{
-				for (int j = side / 2; j)
+				for (int j = 0; j < i; j++)
+				{
+					std::cout << " ";
+				}
+
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(hConsole, color);
+
+				for (int j = 0; j <= count; j++)
+				{
+						std::cout << " *";
+				}
+
+			SetConsoleTextAttribute(hConsole, consol_white);
+
+				std::cout << std::endl;
+				count--;
 			}
 		}
+		void print()const
+		{
+			std::cout << "Стороны равностороннего треугольника: " << side << std::endl;
+			std::cout << "Высота равностороннего треугольника: " << height() << std::endl;
+			std::cout << "Площадь равностороннего треугольника: " << area() << std::endl;
+			std::cout << "Периметр равностороннего треугольника: " << perimeter() << std::endl;
+			std::cout << std::endl;
+			draving();
+		}
+	};
+
+	class IsoscelesTriangle :public Triangle
+	{
+		double side_A;
+		double side_B;
+	public:
+		double get_side_A()const
+		{
+			return side_A;
+		}
+		double get_side_B()const
+		{
+			return side_B;
+		}
+
+		void set_side_A(double side_A)
+		{
+			if (side_A <= 0)
+			{
+				side_A = 1;
+			}
+			this->side_A = side_A;
+		}
+		void set_side_B(double side_B)
+		{
+			if (side_B <= 0)
+			{
+				side_B = 1;
+			}
+			this->side_B = side_B;
+		}
+
+		//------------------------------Constructors-----------------------------
+
+		IsoscelesTriangle(Color color, double side_A, double side_B):Triangle(color)
+		{
+			set_side_A(side_A);
+			set_side_B(side_B);
+
+			std::cout << "IsTrConstructor:\t" << this << std::endl;
+		}
+
+		//-------------------------------Destructor-------------------------------
+
+		~IsoscelesTriangle()
+		{
+			std::cout << "IsTrDestructor:\t" << this << std::endl;
+		}
+
+		//-------------------------------Mhetods------------------------------------
+
+		double height()const
+		{
+			return sqrt(pow(side_A, 2) - pow(side_B / 2, 2));
+		}
+		double area()const
+		{
+			return 0.5 * side_B * height();
+		}
+		double perimeter()const
+		{
+			return side_A * 2 + side_B;
+		}
+		void draving()const
+		{
+
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+			for (int i = 0; i < side_A; i++)
+			{
+			SetConsoleTextAttribute(hConsole, color);
+				for (int j = 0; j <= i; j++)
+				{
+					std::cout << " *";
+				}
+
+			SetConsoleTextAttribute(hConsole, consol_white);
+				std::cout << std::endl;
+			}
+
+		}
+		void print()const
+		{
+			std::cout << "Длина сторон равнобедренного треугольник: " << side_A << std::endl;
+			std::cout << "Длина основания равнобедренного треугольника: " << side_B << std::endl;
+			std::cout << "Высота равнобедренного треугольника: " << height() << std::endl;
+			std::cout << "Площадь равнобедренного треугольника: " << area() << std::endl;
+			std::cout << "Периметр равнобедренного треугольника: " << perimeter() << std::endl;
+			std::cout << std::endl;
+			draving();
+		}
+
+	};
+
+	class RoundShape :public Shape
+	{
+	public:
+
+		//----------------------------constructors-------------------------
+
+		RoundShape(Color color) :Shape(color)
+		{
+			std::cout << "RoShConstructor:\t" << this << std::endl;
+		}
+
+		//----------------------------Destructor----------------------------
+
+		~RoundShape()
+		{
+			std::cout << "RoShDestructor:\t" << this << std::endl;
+		}
+	};
+
+	class Circle :public RoundShape
+	{
+		double radius;
+	public:
+		double get_radius()const
+		{
+			return radius;
+		}
+
+		void set_radius(double radius)
+		{
+			if (radius <= 0)
+			{
+				radius = 1;
+			}
+			this->radius = radius;
+		}
+
+		//----------------------------Constructors---------------------------
+
+		Circle(Color color, double radius) :RoundShape(color)
+		{
+			set_radius(radius);
+
+			std::cout << "CiConstructor:\t" << this << std::endl;
+		}
+
+		//------------------------------Destructor------------------------------
+
+		~Circle()
+		{
+			std::cout << "CiDestructor:\t" << this << std::endl;
+		}
+
+		//-------------------------------Mhetods----------------------------------
+
+		double diameter()const
+		{
+			return radius * 2;
+		}
+		double area()const
+		{
+			return M_PI * pow(radius, 2);
+		}
+		double perimeter()const
+		{
+			return diameter() * M_PI;
+		}
+		void drawing()const
+		{
+			HWND hwnd = GetConsoleWindow();
+
+			HDC dc = GetDC(hwnd);
+
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(dc, hBrush);
+			/*SetDCBrushColor(hdc, RGB(255, 0, 0));*/
+
+			Ellipse(dc, 1300, 300, 1300 + diameter(), 300 + diameter());
+
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, dc);
+		}
+
+		void print()const
+		{
+			std::cout << "Радиус круга: " << radius << std::endl;
+			std::cout << "Диаметр круга: " << diameter() << std::endl;
+			std::cout << "Площадь круга: " << area() << std::endl;
+			std::cout << "Периметр круга: " << perimeter() << std::endl;
+			std::cout << std::endl;
+			
+			while (!GetAsyncKeyState(VK_RETURN))
+			{
+				drawing();
+			}
+		}
+		
 	};
 
 }
@@ -289,15 +514,39 @@ int main()
 {
 	setlocale(LC_ALL, "");
 
-	GeometriShapes::Square square(green, 5);
+	GeometriShapes::Square square(consol_green, 5);
 	delimiter;
 	square.print();
 	delimiter;
 
-	GeometriShapes::Rectangle rectangle(blue, 5, 10);
+	/*system("pause");
+	system("cls");*/
+
+	GeometriShapes::Rectangle rectangle(consol_blue, 5, 10);
 	delimiter;
 	rectangle.print();
 	delimiter;
+
+	//system("pause");
+	//system("cls");
+
+
+	GeometriShapes::EquilateralTriangle equilateral_triangle(consol_red, 8);
+	delimiter;
+	equilateral_triangle.print();
+	delimiter;
+
+	GeometriShapes::IsoscelesTriangle isosceles_triangle(consol_blue, 10, 5);
+	delimiter;
+	isosceles_triangle.print();
+	delimiter;
+
+
+	GeometriShapes::Circle circle(blue, 200);
+	delimiter;
+	circle.print();
+	delimiter;
+
 	
 	return 0;
 }
