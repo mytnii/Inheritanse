@@ -1,11 +1,12 @@
-/*Построить иерархию геометрических фигур: Квадрат, Прямоугольник, Круг, Треугольник.
-   Для каждой фигуры вывести ее особые свойства (первичные параметры), площадь, периметр 
-   и наривать каждую фигуру.*/
+п»ї/*РџРѕСЃС‚СЂРѕРёС‚СЊ РёРµСЂР°СЂС…РёСЋ РіРµРѕРјРµС‚СЂРёС‡РµСЃРєРёС… С„РёРіСѓСЂ: РљРІР°РґСЂР°С‚, РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє, РљСЂСѓРі, РўСЂРµСѓРіРѕР»СЊРЅРёРє.
+   Р”Р»СЏ РєР°Р¶РґРѕР№ С„РёРіСѓСЂС‹ РІС‹РІРµСЃС‚Рё РµРµ РѕСЃРѕР±С‹Рµ СЃРІРѕР№СЃС‚РІР° (РїРµСЂРІРёС‡РЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹), РїР»РѕС‰Р°РґСЊ, РїРµСЂРёРјРµС‚СЂ 
+   Рё РЅР°СЂРёРІР°С‚СЊ РєР°Р¶РґСѓСЋ С„РёРіСѓСЂСѓ.*/
 
 #define _USE_MATH_DEFINES
 
 #include <Windows.h>
 #include <iostream>
+#include <fstream>
 
 #define delimiter std::cout <<"----------------------------------------------------\n"
 
@@ -124,9 +125,9 @@ namespace GeometriShapes
 		}
 		void print()const
 		{
-			std::cout << "Стороны квадрата: " << side << std::endl;
-			std::cout << "Площадь кварата: " << area(side) << std::endl;
-			std::cout << "Периметр квадрата: " << perimeter(side) << std::endl;
+			std::cout << "РЎС‚РѕСЂРѕРЅС‹ РєРІР°РґСЂР°С‚Р°: " << side << std::endl;
+			std::cout << "РџР»РѕС‰Р°РґСЊ РєРІР°СЂР°С‚Р°: " << area(side) << std::endl;
+			std::cout << "РџРµСЂРёРјРµС‚СЂ РєРІР°РґСЂР°С‚Р°: " << perimeter(side) << std::endl;
 			std::cout << std::endl;
 			drawing();
 			std::cout << std::endl;
@@ -210,10 +211,10 @@ namespace GeometriShapes
 		}
 		void print()const
 		{
-			std::cout << "Длинна прямоугольника: " << length << std::endl;
-			std::cout << "Ширина прямоугольник: " << width << std::endl;
-			std::cout << "Площадь прямоугольника: " << area(length, width) << std::endl;
-			std::cout << "Периметр прямоугольника: " << perimeter(length, width) << std::endl;
+			std::cout << "Р”Р»РёРЅРЅР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°: " << length << std::endl;
+			std::cout << "РЁРёСЂРёРЅР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє: " << width << std::endl;
+			std::cout << "РџР»РѕС‰Р°РґСЊ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°: " << area(length, width) << std::endl;
+			std::cout << "РџРµСЂРёРјРµС‚СЂ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°: " << perimeter(length, width) << std::endl;
 			std::cout << std::endl;
 			drawing();
 
@@ -310,10 +311,10 @@ namespace GeometriShapes
 		}
 		void print()const
 		{
-			std::cout << "Стороны равностороннего треугольника: " << side << std::endl;
-			std::cout << "Высота равностороннего треугольника: " << height() << std::endl;
-			std::cout << "Площадь равностороннего треугольника: " << area() << std::endl;
-			std::cout << "Периметр равностороннего треугольника: " << perimeter() << std::endl;
+			std::cout << "РЎС‚РѕСЂРѕРЅС‹ СЂР°РІРЅРѕСЃС‚РѕСЂРѕРЅРЅРµРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << side << std::endl;
+			std::cout << "Р’С‹СЃРѕС‚Р° СЂР°РІРЅРѕСЃС‚РѕСЂРѕРЅРЅРµРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << height() << std::endl;
+			std::cout << "РџР»РѕС‰Р°РґСЊ СЂР°РІРЅРѕСЃС‚РѕСЂРѕРЅРЅРµРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << area() << std::endl;
+			std::cout << "РџРµСЂРёРјРµС‚СЂ СЂР°РІРЅРѕСЃС‚РѕСЂРѕРЅРЅРµРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << perimeter() << std::endl;
 			std::cout << std::endl;
 			draving();
 		}
@@ -401,11 +402,11 @@ namespace GeometriShapes
 		}
 		void print()const
 		{
-			std::cout << "Длина сторон равнобедренного треугольник: " << side_A << std::endl;
-			std::cout << "Длина основания равнобедренного треугольника: " << side_B << std::endl;
-			std::cout << "Высота равнобедренного треугольника: " << height() << std::endl;
-			std::cout << "Площадь равнобедренного треугольника: " << area() << std::endl;
-			std::cout << "Периметр равнобедренного треугольника: " << perimeter() << std::endl;
+			std::cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅ СЂР°РІРЅРѕР±РµРґСЂРµРЅРЅРѕРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРє: " << side_A << std::endl;
+			std::cout << "Р”Р»РёРЅР° РѕСЃРЅРѕРІР°РЅРёСЏ СЂР°РІРЅРѕР±РµРґСЂРµРЅРЅРѕРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << side_B << std::endl;
+			std::cout << "Р’С‹СЃРѕС‚Р° СЂР°РІРЅРѕР±РµРґСЂРµРЅРЅРѕРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << height() << std::endl;
+			std::cout << "РџР»РѕС‰Р°РґСЊ СЂР°РІРЅРѕР±РµРґСЂРµРЅРЅРѕРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << area() << std::endl;
+			std::cout << "РџРµСЂРёРјРµС‚СЂ СЂР°РІРЅРѕР±РµРґСЂРµРЅРЅРѕРіРѕ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°: " << perimeter() << std::endl;
 			std::cout << std::endl;
 			draving();
 		}
@@ -490,17 +491,26 @@ namespace GeometriShapes
 			SelectObject(hdc, hBrush);
 			/*SetDCBrushColor(hdc, RGB(255, 0, 0));*/
 
+			double a = diameter();
+
 			Ellipse(hdc, 1300, 300, 1300 + diameter(), 300 + diameter());
+
+			/*hBrush = CreateSolidBrush(RGB(100, 255, 0));
+
+			SelectObject(hdc, hBrush);
+
+			Ellipse(hdc, 1300, 300, 1300 + diameter() - 100, 300 + diameter() - 100);*/
+
 
 			DeleteObject(hBrush);
 			ReleaseDC(hwnd, hdc);
 		}
 		void print()const
 		{
-			std::cout << "Радиус круга: " << radius << std::endl;
-			std::cout << "Диаметр круга: " << diameter() << std::endl;
-			std::cout << "Площадь круга: " << area() << std::endl;
-			std::cout << "Периметр круга: " << perimeter() << std::endl;
+			std::cout << "Р Р°РґРёСѓСЃ РєСЂСѓРіР°: " << radius << std::endl;
+			std::cout << "Р”РёР°РјРµС‚СЂ РєСЂСѓРіР°: " << diameter() << std::endl;
+			std::cout << "РџР»РѕС‰Р°РґСЊ РєСЂСѓРіР°: " << area() << std::endl;
+			std::cout << "РџРµСЂРёРјРµС‚СЂ РєСЂСѓРіР°: " << perimeter() << std::endl;
 			std::cout << std::endl;
 			
 			while (!GetAsyncKeyState(VK_RETURN))
@@ -539,6 +549,8 @@ int main()
 
 	GeometriShapes::Circle circle(blue, 200);
 	delimiter;
+
+	std::ofstream fout("circle.png");
 	circle.print();
 	delimiter;
 
