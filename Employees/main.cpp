@@ -52,7 +52,7 @@ public:
 
 	//------------------------Metods--------------------------------
 
-	virtual std::ostream& print(std::ostream& os)const
+	 std::ostream& print(std::ostream& os)const
 	{
 		os.width(10);
 		os << std::left;
@@ -472,6 +472,10 @@ void main()
 		new Permanent_payment("Иван", "Иванов", 35, "Туниядец", 30000),
 		new Hourly_pay("Петя", "Петров", 40, "Продавец", 1200),
 	};
+
+	delimiter;
+
+	delimiter;
 
 	print(employes, sizeof(employes) / sizeof(Human*));
 

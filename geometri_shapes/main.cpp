@@ -513,7 +513,7 @@ namespace GeometriShapes
 			std::cout << "Периметр круга: " << perimeter() << std::endl;
 			std::cout << std::endl;
 			
-			while (!GetAsyncKeyState(VK_RETURN))
+			while (!GetAsyncKeyState(VK_ESCAPE))
 			{
 				drawing();
 			}
@@ -532,25 +532,35 @@ int main()
 	square.print();
 	delimiter;
 
+	system("pause");
+	system("cls");
+
 	GeometriShapes::Rectangle rectangle(consol_blue, 5, 10);
 	delimiter;
 	rectangle.print();
 	delimiter;
+
+	system("pause");
+	system("cls");
 
 	GeometriShapes::EquilateralTriangle equilateral_triangle(consol_red, 8);
 	delimiter;
 	equilateral_triangle.print();
 	delimiter;
 
+	system("pause");
+	system("cls");
+
 	GeometriShapes::IsoscelesTriangle isosceles_triangle(consol_blue, 10, 5);
 	delimiter;
 	isosceles_triangle.print();
 	delimiter;
 
+	system("pause");
+	system("cls");
+
 	GeometriShapes::Circle circle(blue, 200);
 	delimiter;
-
-	std::ofstream fout("circle.png");
 	circle.print();
 	delimiter;
 
