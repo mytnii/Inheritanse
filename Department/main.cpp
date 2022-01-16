@@ -1,5 +1,7 @@
 #include<iostream>
 #include<string>
+#include<fstream>
+
 using namespace std;
 
 
@@ -55,12 +57,24 @@ public:
 		cout << "HDestructor:\t" << this << endl;
 	}
 
-	virtual void print()const
+	virtual std::ostream& print(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << " лет" << endl;
+		os.width(10);
+		os << left;
+		os << last_name;
+		os.width(10);
+		os << first_name;
+		os.width(3);
+		os << age << " лет";
+		return os;
 	}
 
 };
+
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
 
 #define EMPLOYEE_TAKE_PARAMETERS const std::string& position
 #define EMPLOYEE_GIVE_PARAMETERS position
@@ -90,11 +104,10 @@ public:
 		cout << "EDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << position;
-		cout << endl;
+		Human::print(os) << " ";
+		return os << position;
 	}
 };
 
@@ -130,11 +143,11 @@ public:
 		cout << "PEDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Employee::print();
-		cout << salary;
-		cout << endl;
+		Employee::print(os) << " ";
+		return os << salary;
+		
 	}
 };
 
@@ -186,11 +199,10 @@ public:
 		cout << "HEDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Employee::print();
-		cout << "тариф: " << rate << " ,отработано: " << hours << " и того " << get_salary();
-		cout << endl;
+		Employee::print(os) << " ";
+		return os << "тариф: " << rate << " ,отработано: " << hours << " и того " << get_salary();
 	}
 };
 
@@ -209,15 +221,27 @@ void main()
 
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
+
+		     
 		//department[i]->print();
-		cout << *department << endl;
+		cout << *department[i] << endl;
 		total_salary += department[i]->get_salary();
 		delimiter
 	}
 
-	delimiter;
 	cout << "Общая зарплата всего отдела: " << total_salary << endl;
 	delimiter;
+
+	ofstream fout("file.txt");
+
+	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
+	{
+		fout.width(25);
+		fout << left;
+		fout << string(typeid(*department[i]).name()) + ":" <<  *department[i] << endl;
+	}
+	fout.close();
+	system("start notepad file.txt");
 
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
