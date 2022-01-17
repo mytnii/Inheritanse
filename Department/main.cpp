@@ -81,6 +81,12 @@ public:
 		return os;
 	}
 
+	virtual std::ifstream& scan(std::ifstream& is)
+	{
+		is >> last_name >> first_name >> age;
+		return is;
+	}
+
 };
 
 std::ostream& operator<<(std::ostream& os, const Human& obj)
@@ -90,6 +96,11 @@ std::ostream& operator<<(std::ostream& os, const Human& obj)
 std::ofstream& operator<<(std::ofstream& os, const Human& obj)
 {
 	return obj.print(os);
+}
+
+std::ifstream& operator>>(std::ifstream& is, Human& obj)
+{
+	return obj.scan(is);
 }
 
 #define EMPLOYEE_TAKE_PARAMETERS const std::string& position
@@ -133,6 +144,12 @@ public:
 		os << position;
 		return os;
 
+	}
+	ifstream& scan(ifstream& is)
+	{
+		Human::scan(is);
+		is >> position;
+		return is;
 	}
 
 };
@@ -190,7 +207,12 @@ public:
 		return os;
 
 	}
-
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> salary;
+		return is;
+	}
 };
 
 #define HOURLY_EMPLOYEE_TAKE_PARAMETERS double rate, int hours
@@ -264,13 +286,33 @@ public:
 		os << hours;
 		return os;
 	}
-
+	ifstream& scan(ifstream& is)
+	{
+		Employee::scan(is);
+		is >> rate >> hours;
+		return is;
+	}
 };
+
+Employee* EmployeeFactory(const string& type)
+{
+	if (type.find("PermanentEmployee") != std::string::npos)
+	{
+		return new PermanentEmployee("", "", 0, "", 0);
+	}
+	if (type.find("HourlyEmployee") != std::string::npos)
+	{
+		return new HourlyEmployee("", "", 0, "", 0, 0);
+	}
+}
+
+//#define SAVE_TO_FILE
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
+#ifdef SAVE_TO_FILE
 	Employee* department[] =
 	{
 		new PermanentEmployee("Rosenberg", "Ken", 30, "Lawyer", 2000),
@@ -283,7 +325,7 @@ void main()
 	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
 	{
 
-		     
+
 		//department[i]->print();
 		cout << *department[i] << endl;
 		total_salary += department[i]->get_salary();
@@ -309,4 +351,49 @@ void main()
 	{
 		delete department[i];
 	}
+#endif // SAVE_TO_FILE
+
+	Employee** department = nullptr;
+		int n = 0;
+
+	ifstream fin("file.txt");
+
+	if (fin.is_open())
+	{
+		string employee_type;
+		for (; !fin.eof(); n++)
+		{
+			getline(fin, employee_type);
+		}
+		cout << n << endl;
+		department = new Employee * [n] {};
+
+		cout << fin.tellg() << endl;
+		fin.clear();
+		fin.seekg(0);
+		cout << fin.tellg() << endl;
+		for (int i = 0; i < n; i++)
+		{
+			getline(fin, employee_type, ':');
+			department[i] = EmployeeFactory(employee_type);
+			fin >> *department[i];
+		}
+		for (int i = 0; i < n; i++)
+		{
+			cout << *department[i] << endl;
+		}
+
+		for (int i = 0; i < n; i++)
+		{
+			delete department[i];
+		}
+
+	}
+	else
+	{
+		cerr << "Error: file not found" << endl;
+	}
+
+	delete[] department;
+	fin.close();
 }
