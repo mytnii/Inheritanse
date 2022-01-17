@@ -22,6 +22,8 @@ enum Color
 	blue  = 0x00FF0000
 };
 
+//#define CONSOL_DRAWING
+
 namespace GeometriShapes
 {
 	class Shape
@@ -110,6 +112,7 @@ namespace GeometriShapes
 		}
 		void drawing()const
 		{
+#ifdef CONSOL_DRAWING
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hConsole, color);
 			for (int i = 0; i < side; i++)
@@ -122,15 +125,29 @@ namespace GeometriShapes
 				std::cout << std::endl;
 			}
 			SetConsoleTextAttribute(hConsole, consol_white);
+#endif // CONSOL_DRAWING
+
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hBrush);
+
+			::Rectangle(hdc, 1300, 300, 1300 + side, 300 + side);
+
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
 		}
 		void print()const
 		{
 			std::cout << "Стороны квадрата: " << side << std::endl;
 			std::cout << "Площадь кварата: " << area(side) << std::endl;
 			std::cout << "Периметр квадрата: " << perimeter(side) << std::endl;
-			std::cout << std::endl;
-			drawing();
-			std::cout << std::endl;
+			
+			while (!GetAsyncKeyState(VK_ESCAPE))
+			{
+				drawing();
+			}
 		}
 	};
 
@@ -194,6 +211,7 @@ namespace GeometriShapes
 		}
 		void drawing()const
 		{
+#ifdef CONSOL_DRAWING
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hConsole, color);
 
@@ -207,7 +225,18 @@ namespace GeometriShapes
 				std::cout << std::endl;
 			}
 			SetConsoleTextAttribute(hConsole, consol_white);
+#endif // CONSOL_DRAWING
 
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hBrush);
+
+			::Rectangle(hdc, 1300, 300, 1300 + length, 300 + width);
+
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
 		}
 		void print()const
 		{
@@ -215,8 +244,11 @@ namespace GeometriShapes
 			std::cout << "Ширина прямоугольник: " << width << std::endl;
 			std::cout << "Площадь прямоугольника: " << area(length, width) << std::endl;
 			std::cout << "Периметр прямоугольника: " << perimeter(length, width) << std::endl;
-			std::cout << std::endl;
-			drawing();
+
+			while (!GetAsyncKeyState(VK_ESCAPE))
+			{
+				drawing();
+			}
 
 
 		}
@@ -284,10 +316,11 @@ namespace GeometriShapes
 		{
 			return side * 3;
 		}
-		void draving()const
+		void drawing()const
 		{
 			int count = side - 1;
 
+#ifdef CONSOL_DRAWING
 			for (int i = 0; i < side; i++)
 			{
 				for (int j = 0; j < i; j++)
@@ -295,19 +328,37 @@ namespace GeometriShapes
 					std::cout << " ";
 				}
 
-			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-			SetConsoleTextAttribute(hConsole, color);
+				HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+				SetConsoleTextAttribute(hConsole, color);
 
 				for (int j = 0; j <= count; j++)
 				{
-						std::cout << " *";
+					std::cout << " *";
 				}
 
-			SetConsoleTextAttribute(hConsole, consol_white);
+				SetConsoleTextAttribute(hConsole, consol_white);
 
 				std::cout << std::endl;
 				count--;
 			}
+#endif // CONSOL_DRAVING
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hBrush);
+
+			const POINT point[] =
+			{
+				{1300, 300 + side},
+				{1300 + side, 300 + side},
+				{1300 + side / 2, 300 + side - height()}
+			};
+
+			Polygon(hdc, point, sizeof(point) / sizeof(POINT));
+
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
 		}
 		void print()const
 		{
@@ -315,8 +366,11 @@ namespace GeometriShapes
 			std::cout << "Высота равностороннего треугольника: " << height() << std::endl;
 			std::cout << "Площадь равностороннего треугольника: " << area() << std::endl;
 			std::cout << "Периметр равностороннего треугольника: " << perimeter() << std::endl;
-			std::cout << std::endl;
-			draving();
+
+			while (!GetAsyncKeyState(VK_ESCAPE))
+			{
+				drawing();
+			}
 		}
 	};
 
@@ -384,20 +438,38 @@ namespace GeometriShapes
 		}
 		void draving()const
 		{
-
+#ifdef CONSOL_DRAWING
 			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 			for (int i = 0; i < side_A; i++)
 			{
-			SetConsoleTextAttribute(hConsole, color);
+				SetConsoleTextAttribute(hConsole, color);
 				for (int j = 0; j <= i; j++)
 				{
 					std::cout << " *";
 				}
 
-			SetConsoleTextAttribute(hConsole, consol_white);
+				SetConsoleTextAttribute(hConsole, consol_white);
 				std::cout << std::endl;
 			}
+#endif // CONSOL_DRAWING
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HBRUSH hBrush = CreateSolidBrush(color);
+
+			SelectObject(hdc, hBrush);
+
+			const POINT point[] =
+			{
+				{1300, 300 + side_A},
+				{1300 + side_B, 300 + side_A},
+				{1300 + side_B / 2, 300 + side_A - height()}
+			};
+
+			Polygon(hdc, point, sizeof(point) / sizeof(POINT));
+
+			DeleteObject(hBrush);
+			ReleaseDC(hwnd, hdc);
 
 		}
 		void print()const
@@ -407,8 +479,11 @@ namespace GeometriShapes
 			std::cout << "Высота равнобедренного треугольника: " << height() << std::endl;
 			std::cout << "Площадь равнобедренного треугольника: " << area() << std::endl;
 			std::cout << "Периметр равнобедренного треугольника: " << perimeter() << std::endl;
-			std::cout << std::endl;
-			draving();
+
+			while (!GetAsyncKeyState(VK_ESCAPE))
+			{
+				draving();
+			}
 		}
 
 	};
@@ -527,7 +602,7 @@ int main()
 {
 	setlocale(LC_ALL, "");
 
-	GeometriShapes::Square square(consol_green, 5);
+	GeometriShapes::Square square(green, 300);
 	delimiter;
 	square.print();
 	delimiter;
@@ -535,7 +610,7 @@ int main()
 	system("pause");
 	system("cls");
 
-	GeometriShapes::Rectangle rectangle(consol_blue, 5, 10);
+	GeometriShapes::Rectangle rectangle(blue, 300, 100);
 	delimiter;
 	rectangle.print();
 	delimiter;
@@ -543,7 +618,7 @@ int main()
 	system("pause");
 	system("cls");
 
-	GeometriShapes::EquilateralTriangle equilateral_triangle(consol_red, 8);
+	GeometriShapes::EquilateralTriangle equilateral_triangle(red, 300);
 	delimiter;
 	equilateral_triangle.print();
 	delimiter;
@@ -551,7 +626,7 @@ int main()
 	system("pause");
 	system("cls");
 
-	GeometriShapes::IsoscelesTriangle isosceles_triangle(consol_blue, 10, 5);
+	GeometriShapes::IsoscelesTriangle isosceles_triangle(blue, 100, 300);
 	delimiter;
 	isosceles_triangle.print();
 	delimiter;
