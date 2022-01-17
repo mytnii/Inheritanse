@@ -69,9 +69,25 @@ public:
 		return os;
 	}
 
+	virtual std::ofstream& print(std::ofstream& os)const
+	{
+		os << left;
+		os.width(10);
+		os << last_name;
+		os.width(10);
+		os << first_name;
+		os.width(3);
+		os << age;
+		return os;
+	}
+
 };
 
 std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	return obj.print(os);
+}
+std::ofstream& operator<<(std::ofstream& os, const Human& obj)
 {
 	return obj.print(os);
 }
@@ -109,6 +125,16 @@ public:
 		Human::print(os) << " ";
 		return os << position;
 	}
+
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Human::print(os) << " ";
+		os.width(10);
+		os << position;
+		return os;
+
+	}
+
 };
 
 #define PERMANENT_EMPLOYEE_TAKE_PARAMETERS double salary
@@ -146,9 +172,25 @@ public:
 	std::ostream& print(std::ostream& os)const
 	{
 		Employee::print(os) << " ";
-		return os << salary;
+		os << right;
+		os.width(10);
+		os << salary;
+
+		return os;
 		
 	}
+
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Employee::print(os) << " ";
+		os << right;
+		os.width(10);
+		os << salary;
+
+		return os;
+
+	}
+
 };
 
 #define HOURLY_EMPLOYEE_TAKE_PARAMETERS double rate, int hours
@@ -202,8 +244,27 @@ public:
 	std::ostream& print(std::ostream& os)const
 	{
 		Employee::print(os) << " ";
-		return os << "тариф: " << rate << " ,отработано: " << hours << " и того " << get_salary();
+		os << "тариф:";
+		os.width(10);
+		os << right;
+		os << rate;
+		os << " ,отработано: ";
+		os.width(5);
+		os << hours << " и того " << get_salary();
+		return os;
 	}
+
+	std::ofstream& print(std::ofstream& os)const
+	{
+		Employee::print(os) << " ";
+		os.width(10);
+		os << right;
+		os << rate;
+		os.width(3);
+		os << hours;
+		return os;
+	}
+
 };
 
 void main()
@@ -238,7 +299,8 @@ void main()
 	{
 		fout.width(25);
 		fout << left;
-		fout << string(typeid(*department[i]).name()) + ":" <<  *department[i] << endl;
+		fout << string(typeid(*department[i]).name()) + ":";
+		fout << *department[i] << endl;
 	}
 	fout.close();
 	system("start notepad file.txt");
