@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 #define delimiter cout << "\n---------------------------------------------------------------\n" << endl;
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
 #define HUMAN_GIVE_PARAMETRES last_name, first_name, age
@@ -63,10 +62,24 @@ public:
 		os << left;
 		os << last_name;
 		os.width(10);
+		os << left;
 		os << first_name;
 		os.width(3);
-		os << age << " лет";
+		os << right;
+		os << age;
+		os<< " лет  ";
 		return os;
+	}
+
+	virtual std::istream& employee(std::istream& in)
+	{
+		getline(in, last_name);
+		getline(in, first_name);
+		string buffer;
+		getline(in, buffer);
+		set_age(stoi(buffer));
+
+		return in;
 	}
 
 };
@@ -75,6 +88,11 @@ std::ostream& operator<<(std::ostream& os, const Human& obj)
 {
 	return obj.print(os);
 }
+std::istream& operator>>(std::istream& in, Human& obj)
+{
+	return obj.employee(in);
+}
+
 
 #define EMPLOYEE_TAKE_PARAMETERS const std::string& position
 #define EMPLOYEE_GIVE_PARAMETERS position
@@ -96,18 +114,28 @@ public:
 	Employee(HUMAN_TAKE_PARAMETERS, EMPLOYEE_TAKE_PARAMETERS):Human(HUMAN_GIVE_PARAMETRES)
 	{
 		set_position(position);
-		cout << "EConstructor:\t" << this << endl;
+		std::cout << "EConstructor:\t" << this << endl;
 	}
 
 	~Employee()
 	{
-		cout << "EDestructor:\t" << this << endl;
+		std::cout << "EDestructor:\t" << this << endl;
 	}
 
 	std::ostream& print(std::ostream& os)const
 	{
-		Human::print(os) << " ";
-		return os << position;
+		Human::print(os);
+		os.width(10);
+		os << left;
+		os << position;
+		return os;
+	}
+
+	std::istream& employee(std::istream& in)
+	{
+		Human::employee(in);
+		getline(in, position);
+		return in;
 	}
 };
 
@@ -145,9 +173,22 @@ public:
 
 	std::ostream& print(std::ostream& os)const
 	{
-		Employee::print(os) << " ";
-		return os << salary;
+		Employee::print(os);
+		os.width(5);
+		os << left;
+		os << salary;
+		return os;
 		
+	}
+
+	std::istream& employee(std::istream& in)
+	{
+		Employee::employee(in);
+		string buffer;
+		getline(in, buffer);
+		set_salary(stoi(buffer));
+
+		return in;
 	}
 };
 
@@ -201,21 +242,61 @@ public:
 
 	std::ostream& print(std::ostream& os)const
 	{
-		Employee::print(os) << " ";
-		return os << "тариф: " << rate << " ,отработано: " << hours << " и того " << get_salary();
+		Employee::print(os);
+		os.width(7);
+		os << left;
+		os << "тариф: " << rate;
+
+		os.width(10);
+		os << left;
+		os << " отработано: " << hours;
+
+		os.width(8);
+		os << left;
+		os << " и того " << get_salary();
+
+		return os;
+	}
+
+	std::istream& employee(std::istream& in)
+	{
+		Employee::employee(in);
+		string buffer;
+		getline(in, buffer);
+		set_rate(stoi(buffer));
+		getline(in, buffer);
+		set_hours(stoi(buffer));
+
+		return in;
 	}
 };
+
+//#define EMPLOYEE_DEPARTMENT
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
+#ifdef EMPLOYEE_DEPARTMENT
 	Employee* department[] =
 	{
 		new PermanentEmployee("Rosenberg", "Ken", 30, "Lawyer", 2000),
 		new PermanentEmployee("Diaz", "Ricardo", 50, "Boss", 50000),
 		new HourlyEmployee("Vercetty", "Tomas", 30, "Security", 500, 8)
 	};
+#endif // EMPLOYEE_DEPARTMENT
+
+	Employee* department[] =
+	{
+		new PermanentEmployee("", "", 0, "", 0),
+		new PermanentEmployee("", "", 50, "", 0),
+		new HourlyEmployee("", "", 0, "", 0, 0)
+	};
+
+	for (int i = 0; i < sizeof(department) / sizeof(Employee*); i++)
+	{
+		cin >> *department[i];
+	}
 
 	double total_salary = 0;
 
