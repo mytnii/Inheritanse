@@ -1,6 +1,8 @@
 
 #include<iostream>
 #include<string>
+#include<fstream>
+
 using namespace std;
 
 #define delimiter cout << "\n---------------------------------------------------------------\n" << endl;
@@ -58,6 +60,26 @@ public:
 	virtual void print()const
 	{
 		cout << last_name << " " << first_name << " " << age << " лет" << endl;
+	}
+
+	virtual std::ofstream& set_group_txt(std::ofstream& out)const
+	{
+		out.width(10);
+		out << left;
+		out << last_name;
+		out << "|";
+
+		out.width(10);
+		out << left;
+		out << first_name;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << age;
+		out << "|";
+
+		return out;
 	}
 
 };
@@ -129,6 +151,32 @@ public:
 		Human::print();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
 	}
+	std::ofstream& set_group_txt(std::ofstream& out)const
+	{
+		Human::set_group_txt(out);
+
+		out.width(20);
+		out << left;
+		out << speciality;
+		out << "|";
+
+		out.width(6);
+		out << left;
+		out << group;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << rating;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << attendance;
+		out << "|";
+
+		return out;
+	}
 };
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, unsigned int experience
@@ -183,6 +231,22 @@ public:
 		Human::print();
 		cout << speciality << " " << experience << endl;
 	}
+	std::ofstream& set_group_txt(std::ofstream& out)const
+	{
+		Human::set_group_txt(out);
+
+		out.width(20);
+		out << left;
+		out << speciality;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << experience;
+		out << "|";
+
+		return out;
+	}
 };
 
 #define GRADUATE_TAKE_PARAMETERS const std::string& subject
@@ -231,7 +295,40 @@ public:
 		cout << subject << endl;
 
 	}
+	std::ofstream& set_group_txt(std::ofstream& out)const
+	{
+		Student::set_group_txt(out);
+
+		out.width(10);
+		out << left;
+		out << subject;
+
+		return out;
+	}
 };
+
+std::ofstream& operator<<(std::ofstream& out, const Human& obj)
+{
+	return obj.set_group_txt(out);
+}
+
+void save_to_file(const Human* group[], const int size, const std::string file_name)
+{
+	std::ofstream fout(file_name);
+
+	for (int i = 0; i < size; i++)
+	{
+		fout.width(15);
+		fout << left;
+		fout << typeid(*group[i]).name() << "|";
+		fout << *group[i] << ";" << endl;
+
+	}
+
+	fout.close();
+
+	system("notepad group.txt");
+}
 
 
 //#define INHERITANCE_CHECK
@@ -269,7 +366,7 @@ void main()
 	delimiter;
 #endif // INHERITANCE_CHECK
 
-	Human* group[] =
+	 const Human* group[] =
 	{
 		new Student("Pinkman", "Jessie", 25, "Chemistry", "WW_123", 85, 95),
 		new Teacher("Connor", "John", 18, "Chemistry", 5),
@@ -287,6 +384,8 @@ void main()
 		group[i]->print();
 		delimiter;
 	}
+
+	save_to_file(group, sizeof(group) / sizeof(Human*), "group.txt");
 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{

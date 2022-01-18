@@ -1,0 +1,6 @@
+class Student  |Pinkman   |Jessie    |25|Chemistry           |WW_123|85|95|;
+class Teacher  |Connor    |John      |18|Chemistry           | 5|;
+class Graduate |Pinkman   |Jessie    |25|Chemistry           |WW_123|85|95|Chemistry ;
+class Student  |Vercetti  |Tomas     |30|City busines        |Vice  |98|99|;
+class Teacher  |Diaz      |Ricardo   |55|Weapons distribution|30|;
+class Student  |Montana   |Antonio   |30|Criminalistic       |Vice  |90|80|;
