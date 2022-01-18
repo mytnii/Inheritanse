@@ -19,4 +19,7 @@
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="group.txt" />
+  </ItemGroup>
 </Project>
