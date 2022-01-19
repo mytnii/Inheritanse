@@ -40,7 +40,7 @@ public:
 		this->age = age;
 	}
 
-	//          Constructors
+	// --------------------------Constructors--------------------------------------
 
 	Human(HUMAN_TAKE_PARAMETERS)
 	{
@@ -50,14 +50,34 @@ public:
 		cout << "HConstructor:\t" << this << endl;
 	}
 
+	//Human()
+	//{
+	//	set_last_name(last_name);
+	//	set_first_name(first_name);
+	//	set_age(age);
+	//}
+
+	//---------------------------Destructor-----------------------------------------
+
 	virtual ~Human()
 	{
 		cout << "HDestructor:\t" << this << endl;
 	}
 
-	virtual void print()const
+	virtual std::ostream& print(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << " лет" << endl;
+		os.width(10);
+		os << left;
+		os << last_name;
+
+		os.width(10);
+		os << left;
+		os << first_name;
+
+		os.width(2);
+		os << age;
+
+		return os;
 	}
 
 };
@@ -106,7 +126,7 @@ public:
 		this->attendance = attendance;
 	}
 
-	//             Constructors
+	//--------------------Constructors-------------------------------
 	Student(
 		HUMAN_TAKE_PARAMETERS,
 		STUDENT_TAKE_PARAMETERS
@@ -119,16 +139,87 @@ public:
 		cout << "SConstructor:\t" << this << endl;
 	}
 
+	//Student() :Human()
+	//{
+	//	set_speciality(speciality);
+	//	set_group(group);
+	//	set_rating(rating);
+	//	set_attendance(attendance);
+	//}
+
+	//---------------------Destructor--------------------------------
+
 	~Student()
 	{
 		cout << "SDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+		Human::print(os);
+
+		os.width(20);
+		os << left;
+		os << speciality;
+
+		os.width(6);
+		os << left;
+		os << group;
+
+		os.width(2);
+		os << right;
+		os << rating;
+
+		os.width(2);
+		os << right;
+		os << attendance;
+
+		return os;
 	}
+<<<<<<< Updated upstream
+=======
+
+	std::ofstream& set_group_txt(std::ofstream& out)const
+	{
+		Human::set_group_txt(out);
+
+		out.width(20);
+		out << left;
+		out << speciality;
+		out << "|";
+
+		out.width(6);
+		out << left;
+		out << group;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << rating;
+		out << "|";
+
+		out.width(2);
+		out << right;
+		out << attendance;
+		out << "|";
+
+		return out;
+	}
+
+	std::ifstream& get_group_txt(std::ifstream& in)
+	{
+		getline(in, speciality, '|');
+		getline(in, group, '|');
+		std::string buffer;
+		getline(in, buffer, '|');
+		set_rating(stoi(buffer));
+		std::string buffer2;
+		getline(in, buffer2, '|');
+		set_attendance(stoi(buffer));
+
+		return in;
+	}
+>>>>>>> Stashed changes
 };
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, unsigned int experience
@@ -157,7 +248,7 @@ public:
 		this->experience = experience;
 	}
 
-	//                  Constructors
+	//-------------------------Constructors-----------------------------
 
 	Teacher
 	(
@@ -171,17 +262,32 @@ public:
 		cout << "TConstructor:\t" << this << endl;
 	}
 
-	//                Destructor
+	//Teacher() :Human()
+	//{
+	//	set_speciality(speciality);
+	//	set_experience(experience);
+	//}
+
+	//--------------------------Destructor--------------------------------
 
 	~Teacher()
 	{
 		cout << "TDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Human::print();
-		cout << speciality << " " << experience << endl;
+		Human::print(os);
+
+		os.width(20);
+		os << left;
+		os << speciality;
+
+		os.width(2);
+		os << right;
+		os << experience;
+
+		return os;
 	}
 };
 
@@ -200,7 +306,7 @@ public:
 		this->subject = subject;
 	}
 
-	//           Constructors
+	//------------------Constructors----------------------------
 
 	Graduate
 	(
@@ -218,23 +324,146 @@ public:
 		cout << "GConstructor:\t" << this << endl;
 	}
 
-	//           Destructor
+	//Graduate() :Student()
+	//{
+	//	set_subject(subject);
+	//}
+
+	//------------------Destructor-----------------------------
 
 	~Graduate()
 	{
 		cout << "GDestructor:\t" << this << endl;
 	}
 
-	void print()const
+	std::ostream& print(std::ostream& os)const
 	{
-		Student::print();
-		cout << subject << endl;
+		Student::print(os);
+
+		os.width(10);
+		os << left;
+		os << subject;
+
+		return os;
 
 	}
 };
 
+<<<<<<< Updated upstream
+=======
+std::ostream& operator<<(std::ostream& os, const  Human& obj)
+{
+	return obj.print(os);
+}
+std::ofstream& operator<<(std::ofstream& out, const Human& obj)
+{
+	return obj.set_group_txt(out);
+}
+std::ifstream& operator>>(std::ifstream& in, Human& obj)
+{
+	return obj.get_group_txt(in);
+}
+
+void save_to_file( Human* group[], const int size, const std::string file_name)
+{
+	std::ofstream fout(file_name);
+
+	for (int i = 0; i < size; i++)
+	{
+		fout.width(15);
+		fout << left;
+		fout << typeid(*group[i]).name() << "|";
+		fout << *group[i] << ";" << endl;
+
+	}
+
+	fout.close();
+
+	system("notepad group.txt");
+}
+
+Human* human_factory(const std::string& type)
+{
+	if (type.find("Student") != std::string::npos)
+	{
+		return new Student("", "", 0, "", "", 0.0, 0.0);
+	}
+	if(type.find("Teacher") != std::string::npos)
+	{
+		return new Teacher("", "", 0, "", 0);
+	}
+	if (type.find("Graduate") != std::string::npos)
+	{
+		return new Graduate("", "", 0, "", "", 0, 0, "");
+	}
+}
+
+Human** load_to_file(const std::string file_name)
+{
+	std::ifstream fin;
+	fin.open(file_name);
+	std::string line;
+	int str = 0;
+
+	Human** group_txt = nullptr;
+
+	if (fin.is_open())
+	{
+		std::cout << "Файл открыт" << std::endl;
+
+		while (!fin.eof())
+		{
+			getline(fin, line, ';');
+			cout << line << endl;
+			str++;
+		}
+
+		str--;
+
+		cout << str << endl;
+
+		cout << fin.tellg() << std::endl;
+		fin.clear();
+		fin.seekg(0);
+		cout << fin.tellg() << std::endl;
+
+		group_txt = new Human * [str] {};
+
+		for (int i = 0; i < str; i++)
+		{
+			cout << group_txt[i] << endl;
+		}
+
+		for (int i = 0; i < str; i++)
+		{
+			getline(fin, line, '|');
+			cout << line << endl;
+			
+			group_txt[i] = human_factory(line);
+			fin >> *group_txt[i];
+			
+			cout << *group_txt[i] << endl;
+
+		}
+
+	fin.close();
+
+	return group_txt;
+
+	}
+	else
+	{
+		cout << "Файла не существует" << endl;
+	}
+
+	return 0;
+
+}
+
+>>>>>>> Stashed changes
 
 //#define INHERITANCE_CHECK
+//#define DEBUG
 
 void main()
 {
@@ -268,6 +497,7 @@ void main()
 
 	delimiter;
 #endif // INHERITANCE_CHECK
+#ifdef DEBUG
 
 	Human* group[] =
 	{
@@ -284,12 +514,40 @@ void main()
 	for (int i = 0; i < sizeof(group) / sizeof(Human*); i++)
 	{
 		cout << typeid(*group[i]).name() << endl;
-		group[i]->print();
+		cout << *group[i] << endl;
 		delimiter;
 	}
 
+<<<<<<< Updated upstream
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+=======
+	save_to_file(group, sizeof(group) / sizeof(Human*), "group.txt");
+
+	for (int i = 0; i < sizeof(group) / sizeof(Human*); i++)
+>>>>>>> Stashed changes
 	{
 		delete group[i];
 	}
+#endif // DEBUG
+
+
+	std::string file = "group.txt";
+
+	Human** group_txt = load_to_file("group.txt");
+
+	for (int i = 0; i < sizeof(group_txt) / sizeof(Human*); i++)
+	{
+		/*cout << typeid(*group_txt[i]).name() << endl;*/
+		/*cout << *group_txt[i] << endl;*/
+		delimiter;
+	}
+
+	for (int i = 0; i < sizeof(group_txt) / sizeof(Human*); i++)
+	{
+		delete group_txt[i];
+	}
+
+	delete[] group_txt;
+
+
 }
