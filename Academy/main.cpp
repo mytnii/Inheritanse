@@ -75,11 +75,21 @@ public:
 		out << "|";
 
 		out.width(2);
-		out << right;
 		out << age;
 		out << "|";
 
 		return out;
+	}
+
+	virtual std::ifstream& get_group_txt(std::ifstream& in)
+	{
+		getline(in, last_name, '|');
+		getline(in, first_name, '|');
+		std::string buffer;
+		getline(in, buffer, '|');
+		set_age(stoi(buffer));
+
+		return in;
 	}
 
 };
@@ -151,6 +161,7 @@ public:
 		Human::print();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
 	}
+
 	std::ofstream& set_group_txt(std::ofstream& out)const
 	{
 		Human::set_group_txt(out);
@@ -176,6 +187,19 @@ public:
 		out << "|";
 
 		return out;
+	}
+
+	std::ifstream& get_group_txt(std::ifstream& in)
+	{
+		getline(in, speciality, '|');
+		getline(in, group, '|');
+		std::string buffer;
+		getline(in, buffer, '|');
+		set_rating(stoi(buffer));
+		getline(in, buffer, '|');
+		set_attendance(stoi(buffer));
+
+		return in;
 	}
 };
 
@@ -231,6 +255,7 @@ public:
 		Human::print();
 		cout << speciality << " " << experience << endl;
 	}
+
 	std::ofstream& set_group_txt(std::ofstream& out)const
 	{
 		Human::set_group_txt(out);
@@ -246,6 +271,16 @@ public:
 		out << "|";
 
 		return out;
+	}
+
+	std::ifstream& get_group_txt(std::ifstream& in)
+	{
+		getline(in, speciality, '|');
+		std::string buffer;
+		getline(in, buffer, '|');
+		set_experience(stoi(buffer));
+
+		return in;
 	}
 };
 
@@ -302,14 +337,26 @@ public:
 		out.width(10);
 		out << left;
 		out << subject;
+		out << "|";
 
 		return out;
+	}
+
+	std::ifstream& get_group_txt(std::ifstream& in)
+	{
+		getline(in, subject, '|');
+
+		return in;
 	}
 };
 
 std::ofstream& operator<<(std::ofstream& out, const Human& obj)
 {
 	return obj.set_group_txt(out);
+}
+std::ifstream& operator>>(std::ifstream& in, Human& obj)
+{
+	return obj.get_group_txt(in);
 }
 
 void save_to_file(const Human* group[], const int size, const std::string file_name)
