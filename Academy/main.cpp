@@ -359,6 +359,19 @@ std::ifstream& operator>>(std::ifstream& in, Human& obj)
 	return obj.get_group_txt(in);
 }
 
+Human* HumanFactory(const string& type)
+{
+	if (type.find("class Student") != std::string::npos)
+	{
+		return new Student();
+	}
+	if (type.find("class Teacher") != std::string::npos)
+	{
+		return new Teacher();
+	}
+	if(type.find("class Graduate"))
+}
+
 void save_to_file(const Human* group[], const int size, const std::string file_name)
 {
 	std::ofstream fout(file_name);
@@ -376,6 +389,7 @@ void save_to_file(const Human* group[], const int size, const std::string file_n
 
 	system("notepad group.txt");
 }
+
 
 
 //#define INHERITANCE_CHECK
