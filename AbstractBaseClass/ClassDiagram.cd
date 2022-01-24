@@ -30,6 +30,15 @@
   </Class>
   <Class Name="Helicopter" Collapsed="true">
     <Position X="4.75" Y="3.25" Width="1.5" />
+    <InheritanceLine Type="GroundVehicle" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="3.5" Y="2.062" />
+        <Point X="4.021" Y="2.062" />
+        <Point X="4.021" Y="2.875" />
+        <Point X="5.5" Y="2.875" />
+        <Point X="5.5" Y="3.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>main.cpp</FileName>
@@ -37,6 +46,15 @@
   </Class>
   <Class Name="Airplane" Collapsed="true">
     <Position X="6.75" Y="3.25" Width="1.5" />
+    <InheritanceLine Type="GroundVehicle" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="3.5" Y="2.062" />
+        <Point X="4.02" Y="2.062" />
+        <Point X="4.02" Y="2.871" />
+        <Point X="7.219" Y="2.871" />
+        <Point X="7.219" Y="3.25" />
+      </Path>
+    </InheritanceLine>
     <InheritanceLine Type="WaterVehicle" FixedToPoint="true">
       <Path>
         <Point X="10.25" Y="2.441" />
