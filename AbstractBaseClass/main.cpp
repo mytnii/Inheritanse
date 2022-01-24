@@ -24,7 +24,7 @@ class AirVehicle : public Vehicle
 
 };
 
-class Helicopter :public AirVehicle, GroundVehicle
+class Helicopter :public AirVehicle, public GroundVehicle
 {
 
 public:
@@ -35,7 +35,7 @@ public:
 	}
 };
 
-class Airplane : public AirVehicle, GroundVehicle, WaterVehicle
+class Airplane : public AirVehicle, public GroundVehicle, public WaterVehicle
 {
 public:
 	void move()
@@ -46,7 +46,7 @@ public:
 	}
 };
 
-class Boat : WaterVehicle
+class Boat :public WaterVehicle
 {
 public:
 	void move()
@@ -55,7 +55,7 @@ public:
 	}
 };
 
-class Yacht : WaterVehicle
+class Yacht : public WaterVehicle
 {
 public:
 	void move()
@@ -64,7 +64,7 @@ public:
 	}
 };
 
-class Car : GroundVehicle
+class Car : public GroundVehicle
 {
 public:
 	void move()
@@ -73,7 +73,7 @@ public:
 	}
 };
 
-class Bike :GroundVehicle
+class Bike : public GroundVehicle
 {
 public:
 	void move()
