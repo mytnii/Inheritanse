@@ -636,6 +636,99 @@ namespace AbstractGeometry
 				}
 			}
 		};
+
+		class IsoscelesAcuteTriangle :public IsoscelesTriangle
+		{
+			double hip;
+			double base;
+		public:
+			const double get_hip()const
+			{
+				return hip;
+			}
+			const double get_base()const
+			{
+				return base;
+			}
+			void set_hip(double hip)
+			{
+				if (hip <= 20)hip = 20;
+				this->hip = hip;
+			}
+			void set_base(double base)
+			{
+				if (base <= 10)base = 10;
+				this->base = base;
+			}
+
+			IsoscelesAcuteTriangle
+			(
+				double hip, double base, Color color, unsigned int start_x,
+				unsigned int start_y, unsigned int line_width
+			) :IsoscelesTriangle(color, start_x, start_y, line_width)
+			{
+				set_hip(hip);
+				set_base(base);
+			}
+
+			~IsoscelesAcuteTriangle()
+			{
+
+			}
+
+			double get_height()const
+			{
+				return sqrt(pow(hip, 2) - pow(base / 2, 2));
+			}
+			double get_area()const
+			{
+				return 0.5 * base * get_height();
+			}
+			double get_perimeter()const
+			{
+				return hip * 2 + base;
+			}
+
+			void draw()const
+			{
+				HWND hConsole = GetConsoleWindow();
+				HDC hdc = GetDC(hConsole);
+				HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+				HBRUSH hBrush = CreateSolidBrush(color);
+
+				SelectObject(hdc, hPen);
+				SelectObject(hdc, hBrush);
+				const POINT point[] =
+				{
+					{start_x, start_y + hip},
+					{start_x + base, start_y + hip},
+					{start_x + base / 2, start_y + hip - get_height()}
+				};
+
+				Polygon(hdc, point, sizeof(point) / sizeof(POINT));
+
+				DeleteObject(hBrush);
+				DeleteObject(hPen);
+				ReleaseDC(hConsole, hdc);
+			}
+			void print()const
+			{
+				cout << "Бедра равнобедренного тупоугольного треугольника:\t"
+					<< hip << endl;
+				cout << "Основание равнобедренного тупоугольного треугольника:\t"
+					<< base << endl;
+				cout << "Высота равнобедренного тупоугольного треугольника:\t"
+					<< get_height() << endl;
+				cout << "Площадь равнобедренного тупоугольного треугольника:\t"
+					<< get_area() << endl;
+				cout << "Периметр равнобедренного тупоугольного треугольника:\t"
+					<< get_perimeter() << endl;
+				while (!GetAsyncKeyState(VK_ESCAPE))
+				{
+					draw();
+				}
+			}
+		};
 }
 void main()
 {
@@ -681,8 +774,18 @@ void main()
 
 	AbstractGeometry::IsoscelesRightTriangle isoscel_right_triangle
 	(
-		200, AbstractGeometry::Color::red,
+		300, AbstractGeometry::Color::red,
 		300, 300, 5
 	);
 	isoscel_right_triangle.print();
+
+	system("pause");
+	system("cls");
+
+	AbstractGeometry::IsoscelesAcuteTriangle isoscel_acute_triangle
+	(
+		300, 200, AbstractGeometry::Color::red,
+		300, 300, 5
+	);
+	isoscel_acute_triangle.print();
 }
