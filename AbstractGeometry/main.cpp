@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+ï»¿#define _USE_MATH_DEFINES
 
 #include<iostream>
 #include<Windows.h>
@@ -144,9 +144,9 @@ namespace AbstractGeometry
 		}
 		void print()const
 		{
-			cout << "Ñòîðîíû êâàäðàòà:\t" << side << endl;
-			cout << "Ïëîùàäü êâàäðàòà:\t" << get_area() << endl;
-			cout << "Ïåðèìåòð êâàäðàòà:\t" << get_perimeter() << endl;
+			cout << "Ð¡Ñ‚Ð¾Ñ€Ð¾Ð½Ñ‹ ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð°:\t" << side << endl;
+			cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð°:\t" << get_area() << endl;
+			cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð°:\t" << get_perimeter() << endl;
 			while (!GetAsyncKeyState(VK_ESCAPE))
 			{
 				draw();
@@ -217,10 +217,10 @@ namespace AbstractGeometry
 		}
 		void print()const
 		{
-			cout << "Äëèííà ïðÿìîóãîëüíèêà:\t" << length << endl;
-			cout << "Øèðèíà ïðÿìîóãîëüíèêà:\t" << width << endl;
-			cout << "Ïëîùàäü ïðÿìîóãîëüíèêà:\t" << get_area() << endl;
-			cout << "Ïåðèìåòð ïðÿìîóãîëüíèêà:\t" << get_perimeter() << endl;
+			cout << "Ð”Ð»Ð¸Ð½Ð½Ð° Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << length << endl;
+			cout << "Ð¨Ð¸Ñ€Ð¸Ð½Ð° Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << width << endl;
+			cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << get_area() << endl;
+			cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << get_perimeter() << endl;
 			while (!GetAsyncKeyState(VK_ESCAPE))
 			{
 				draw();
@@ -305,10 +305,10 @@ namespace AbstractGeometry
 		}
 		void print()const
 		{
-			cout << "Ðàäèóñ êðóãà:\t" << radius << endl;
-			cout << "Äèàìåòð êðóãà:\t" << get_diameter() << endl;
-			cout << "Ïëîùàäü êðóãà:\t" << get_area() << endl;
-			cout << "Ïåðèìåòð êðóãà:\t" << get_perimeter() << endl;
+			cout << "Ð Ð°Ð´Ð¸ÑƒÑ ÐºÑ€ÑƒÐ³Ð°:\t" << radius << endl;
+			cout << "Ð”Ð¸Ð°Ð¼ÐµÑ‚Ñ€ ÐºÑ€ÑƒÐ³Ð°:\t" << get_diameter() << endl;
+			cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ ÐºÑ€ÑƒÐ³Ð°:\t" << get_area() << endl;
+			cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ ÐºÑ€ÑƒÐ³Ð°:\t" << get_perimeter() << endl;
 			while (!GetAsyncKeyState(VK_ESCAPE))
 			{
 				draw();
@@ -399,10 +399,10 @@ namespace AbstractGeometry
 		}
 		void print()const
 		{
-			cout << "Ñòîðîíû ðàâíîñòîðîííåãî òðåóãîëüíèêà:\t" << side << endl;
-			cout << "Âûñîòà ðàâíîñòîðîííåãî òðåóãîëüíèêà:\t" << get_height() << endl;
-			cout << "Ïëîùàäü ðàâíîñòîðîííåãî òðåóãîëüíèêà:\t" << get_area() << endl;
-			cout << "Ïåðèìåòð ðàâíîñòîðîííåãî òðåóãîëüíèêà:\t" << get_perimeter() << endl;
+			cout << "Ð¡Ñ‚Ð¾Ñ€Ð¾Ð½Ñ‹ Ñ€Ð°Ð²Ð½Ð¾ÑÑ‚Ð¾Ñ€Ð¾Ð½Ð½ÐµÐ³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << side << endl;
+			cout << "Ð’Ñ‹ÑÐ¾Ñ‚Ð° Ñ€Ð°Ð²Ð½Ð¾ÑÑ‚Ð¾Ñ€Ð¾Ð½Ð½ÐµÐ³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << get_height() << endl;
+			cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ Ñ€Ð°Ð²Ð½Ð¾ÑÑ‚Ð¾Ñ€Ð¾Ð½Ð½ÐµÐ³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << get_area() << endl;
+			cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ Ñ€Ð°Ð²Ð½Ð¾ÑÑ‚Ð¾Ñ€Ð¾Ð½Ð½ÐµÐ³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t" << get_perimeter() << endl;
 			while(!GetAsyncKeyState(VK_ESCAPE))
 			{
 				draw();
@@ -528,15 +528,15 @@ namespace AbstractGeometry
 			}
 			void print()const
 			{
-				cout << "Áåäðà ðàâíîáåäðåííîãî ïðÿìîóãîëüíîãî òðåóãîëüíèêà:\t"
+				cout << "Ð‘ÐµÐ´Ñ€Ð° Ñ€Ð°Ð²Ð½Ð¾Ð±ÐµÐ´Ñ€ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t"
 					 << hip << endl;
-				cout << "Îñíîâàíèå ðàâíîáåäðåííîãî ïðÿìîóãîëüíîãî òðåóãîëüíèêà:\t"
+				cout << "ÐžÑÐ½Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ€Ð°Ð²Ð½Ð¾Ð±ÐµÐ´Ñ€ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t"
 					 << base << endl;
-				cout << "Âûñîòà ðàâíîáåäðåííîãî ïðÿìîóãîëüíîãî òðåóãîëüíèêà:\t"
+				cout << "Ð’Ñ‹ÑÐ¾Ñ‚Ð° Ñ€Ð°Ð²Ð½Ð¾Ð±ÐµÐ´Ñ€ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t"
 					 << get_height() << endl;
-				cout << "Ïëîùàäü ðàâíîáåäðåííîãî ïðÿìîóãîëüíîãî òðåóãîëüíèêà:\t"
+				cout << "ÐŸÐ»Ð¾Ñ‰Ð°Ð´ÑŒ Ñ€Ð°Ð²Ð½Ð¾Ð±ÐµÐ´Ñ€ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t"
 					 << get_area() << endl;
-				cout << "Ïåðèìåòð ðàâíîáåäðåííîãî ïðÿìîóãîëüíîãî òðåóãîëüíèêà:\t"
+				cout << "ÐŸÐµÑ€Ð¸Ð¼ÐµÑ‚Ñ€ Ñ€Ð°Ð²Ð½Ð¾Ð±ÐµÐ´Ñ€ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°:\t"
 					 << get_perimeter() << endl;
 				while (!GetAsyncKeyState(VK_ESCAPE))
 				{
