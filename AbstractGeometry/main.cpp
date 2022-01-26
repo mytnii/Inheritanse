@@ -729,6 +729,24 @@ namespace AbstractGeometry
 				}
 			}
 		};
+
+		class IrregularTriangle :public Triangle
+		{
+		public:
+			IrregularTriangle
+			(
+				Color color, unsigned int start_x,
+				unsigned int start_y, unsigned int line_width
+			) :Triangle(color, start_x, start_y, line_width)
+			{
+
+			}
+
+			~IrregularTriangle()
+			{
+
+			}
+		};
 }
 void main()
 {

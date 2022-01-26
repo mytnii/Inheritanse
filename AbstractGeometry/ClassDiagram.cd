@@ -42,10 +42,10 @@
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AbstractGeometry::Triangle" Collapsed="true">
+  <Class Name="AbstractGeometry::IrregularTriangle" Collapsed="true">
     <Position X="10.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>main.cpp</FileName>
     </TypeIdentifier>
   </Class>
