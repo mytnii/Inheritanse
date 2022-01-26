@@ -408,7 +408,142 @@ namespace AbstractGeometry
 				draw();
 			}
 		}
+
 	};
+		class IsoscelesTriangle :public Triangle
+		{/*
+			double hip;
+			double base;*/
+		public:
+			/*const double get_hip()const
+			{
+				return hip;
+			}
+			const double get_base()const
+			{
+				return base;
+			}
+			void set_hip(double hip)
+			{
+				if (hip <= 10)hip = 10;
+				this->hip = hip;
+			}
+			void set_base(double base)
+			{
+				if (base <= 20)base = 20;
+				this->base = base;
+			}*/
+
+			IsoscelesTriangle
+			(
+				/*double hip, double base,*/
+				Color color, unsigned int start_x,
+				unsigned int start_y, unsigned int line_width
+			) :Triangle(color, start_x, start_y, line_width)
+			{
+				/*set_hip(hip);
+				set_base(base);*/
+			}
+
+			~IsoscelesTriangle()
+			{
+
+			}
+
+
+		};
+
+		class IsoscelesRightTriangle :public IsoscelesTriangle
+		{
+			double hip;
+			double base;
+		public:
+			const double get_hip()const
+			{
+				return hip;
+			}
+			const double get_base()const
+			{
+				return base;
+			}
+			void set_hip(double hip)
+			{
+				if (hip <= 10) hip = 10;
+				this->hip = hip;
+			}
+			void set_base(double hip)
+			{
+				this->base = hip * sqrt(2);
+			}
+
+			IsoscelesRightTriangle
+			(
+				double hip, Color color, unsigned int start_x,
+				unsigned int start_y, unsigned int line_width
+			) :IsoscelesTriangle(color, start_x, start_y, line_width)
+			{
+				set_hip(hip);
+				set_base(hip);
+			}
+
+			~IsoscelesRightTriangle()
+			{
+
+			}
+
+			double get_height()const
+			{
+				return sqrt(pow(hip, 2) - pow(base / 2, 2));
+			}
+			double get_area()const
+			{
+				return 0.5 * base * get_height();
+			}
+			double get_perimeter()const
+			{
+				return hip * 2 + base;
+			}
+
+			void draw()const
+			{
+				HWND hConsole = GetConsoleWindow();
+				HDC hdc = GetDC(hConsole);
+				HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+				HBRUSH hBrush = CreateSolidBrush(color);
+
+				SelectObject(hdc, hPen);
+				SelectObject(hdc, hBrush);
+				const POINT point[] =
+				{
+					{start_x, start_y},
+					{start_x, start_y + hip},
+					{start_x + hip, start_y + hip}
+				};
+
+				Polygon(hdc, point, sizeof(point) / sizeof(POINT));
+
+				DeleteObject(hBrush);
+				DeleteObject(hPen);
+				ReleaseDC(hConsole, hdc);
+			}
+			void print()const
+			{
+				cout << "Бедра равнобедренного прямоугольного треугольника:\t"
+					 << hip << endl;
+				cout << "Основание равнобедренного прямоугольного треугольника:\t"
+					 << base << endl;
+				cout << "Высота равнобедренного прямоугольного треугольника:\t"
+					 << get_height() << endl;
+				cout << "Площадь равнобедренного прямоугольного треугольника:\t"
+					 << get_area() << endl;
+				cout << "Периметр равнобедренного прямоугольного треугольника:\t"
+					 << get_perimeter() << endl;
+				while (!GetAsyncKeyState(VK_ESCAPE))
+				{
+					draw();
+				}
+			}
+		};
 
 }
 void main()
@@ -439,4 +574,14 @@ void main()
 		300, 300, 5
 	);
 	equil_triangle.print();
+
+	system("pause");
+	system("cls");
+
+	AbstractGeometry::IsoscelesRightTriangle isoscel_right_triangle
+	(
+		200, AbstractGeometry::Color::red,
+		300, 300, 5
+	);
+	isoscel_right_triangle.print();
 }
